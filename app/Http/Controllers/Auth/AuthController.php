@@ -46,7 +46,7 @@ class AuthController extends Controller {
     {
          return \App\User::create([
 			'name'=>$data['name'],
-			'image_link'=>$data['image_link'],
+			//'image_link'=>$data['image_link'],
 			'email'=>$data['email'],
 			'password'=>bcrypt($data['password']),
 		]);

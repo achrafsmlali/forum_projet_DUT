@@ -18,6 +18,7 @@ class CreateAnswersTable extends Migration {
 			$table->text('content');
 			$table->integer('pose_vote');
 			$table->integer('nega_vote');
+			$table->boolean('best')->default('0');
 			$table->integer('post_id')->unsigned();
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

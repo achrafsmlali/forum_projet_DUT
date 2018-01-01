@@ -1,7 +1,6 @@
 @extends('app')
 
 @section('content')
-@include('Pages.right_side')
 
 <?php
 $now   = time();
@@ -22,7 +21,7 @@ function dateDiff($date1, $date2){
  	
     if ($retour['day']>0){
     	return "il y a ".$retour['day']." jours";
-    } elseif($retour['heurs']>0){
+    } elseif($retour['hour']>0){
     	return "il y a ".$retour['hour']." heurs";
 
     } elseif($retour['minute']>0){
@@ -34,20 +33,22 @@ function dateDiff($date1, $date2){
 
 ?>
 
-<div id="posts">
+
+<div id="shposts">
 	<ul style="padding-left: 0px;">
+	@if(count($posts)!=0)
 	@foreach($posts as $post )
 		<li class="post">
 			<div class="panel panel-default" style="margin-right: 0px;">
-			  	<div class="panel-body" id="post_inline" style="padding: 10px; height: 70px;">
+			  	<div class="panel-body" id="post_inline" style="padding: 10px; min-height: 70px;">
 			    	<div class="vote">
 			    		<ol style="padding-left: 0px;" >
 			    			<li  style="color:#1D591B;" class="likes" >	    	
-			    				{{ $post->pose_vote }} <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+			    				{{ $post->get_po_vote($post->id) }} <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 			    			</li>
 			    			<center><li class="border_bt"></li></center>
 			    			<li  style="color:#F54032;" class="likes" >	    	
-			    				{{ $post->nega_vote }}<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+			    				{{ $post->get_neg_vote($post->id) }}<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
 			    			</li>
 			    		</ol>
 			    	</div>
@@ -57,16 +58,32 @@ function dateDiff($date1, $date2){
 			    		<img src="{{ asset($post->user->image_link) }}" class="img-circle" width="40px" height="40px">
 			    	</div>
 			    	<div class="user_info">
-			    		publie par:<a href="<?php echo "/profile/".$post->user->name;?>">{{ $post->user->name }}</a><br>
+			    		publie par:<a href="<?php echo "/profile/".$post->user->id;?>">{{ $post->user->name }}</a><br>
 			    		<?php echo dateDiff($now, strtotime($post->created_at)); ?>
 			    	</div>
 				</div>
 			</div>
 		</li>	
 	@endforeach
+	@else
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="alert alert-warning" role="alert">
+	  Aucun resultat n'etait trouve.
+	</div>
+		<br>
+	<br>
+	<br>
+	<br>
+	@endif
 	</ul>
 </div>
 <div class="row">
 	<div class="col-md-12">{!! $posts->render() !!}</div>
 </div>
+
+
+
 @endsection

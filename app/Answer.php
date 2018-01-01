@@ -12,4 +12,7 @@ class Answer extends Model {
 		return $this->hasMany('App\Comment');
 	}
 
+	public function answer_votes(){
+		return $this->hasMany('App\Answer_vote');
+	}
 }
